@@ -1,0 +1,39 @@
+⚙️Technical Architecture Decisions
+Tech Stack: Built using Next.js (App Router) for routing and SSR, Tailwind CSS for styling, and Radix UI for interactive components.
+Local model inference is powered by ollama running the Mistral 7B model.
+
+Model Decision: The task required using the Mistral Small Model API, but I opted to use the Mistral model via Ollama for local development.
+
+Reason: Ollama allows running open-source models locally without needing API keys, internet, 
+or worrying about rate limits, making it a better choice for iterative development and testing.
+
+Trade-off: While this improves local dev experience, it requires higher system memory (~6 GB) and setup effort.
+The project can be easily switched to use an external hosted API if needed.
+
+🔄State Management (Undo/Redo)
+State is managed using React useState hooks.
+
+The history of inputs and outputs is stored in an array.
+
+Undo/redo is handled by tracking a currentIndex pointer:
+undo: sets response text from history[currentIndex - 1]
+redo: sets response text from history[currentIndex + 1]
+
+⚠️ Error Handling & Edge Cases
+Client-side: Wrapped fetch in try/catch. Shows a friendly error message (❌ Something went wrong) in the UI.
+
+Server-side:
+
+Uses try/catch inside the API route.
+
+Parses error messages (e.g., memory errors from Mistral) and returns them in JSON.
+
+Limits request rate using rate-limiter-flexible to prevent abuse.
+
+Edge cases handled:
+
+Empty input content is ignored.
+
+Caching is used to return previous results quickly.
+
+Stream failure or API crash returns a descriptive error message.
