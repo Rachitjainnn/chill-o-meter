@@ -1,3 +1,5 @@
+Video recording of the final output  - https://www.loom.com/share/7aa43b5c052d426ba6bbcba4f482f7ce
+
 ⚙️Technical Architecture Decisions
 Tech Stack: Built using Next.js (App Router) for routing and SSR, Tailwind CSS for styling, and Radix UI for interactive components.
 Local model inference is powered by ollama running the Mistral 7B model.
