@@ -1,36 +1,137 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🧊 Chill-o-Meter
 
-## Getting Started
+Chill-o-Meter is a fun and intuitive AI-powered tool that helps you rephrase messages based on how “chill” or “formal” you want to sound. It uses a local large language model (Mistral via Ollama) to generate personalized rewrites.
 
-First, run the development server:
+---
+
+## ✨ Features
+
+- 🎛️ Tone control with a smooth slider  
+- 🤖 Local AI using Ollama + Mistral  
+- 🔄 History of inputs and responses  
+- ⚡ Fast with local caching  
+- 💻 Fully responsive UI  
+
+---
+
+## 📦 Tech Stack
+
+- **Frontend**: Next.js (App Router), React, Tailwind CSS, Radix UI  
+- **Backend**: Node.js API routes  
+- **AI**: Mistral (via [Ollama](https://ollama.com/))  
+- **Utilities**: Streaming, Rate Limiting, Caching  
+
+---
+
+## 🚀 Local Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/chill-o-meter.git
+cd chill-o-meter
+```
+
+---
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+---
+
+### 3. Install Ollama (Local LLM Runner)
+
+#### macOS (Homebrew)
+
+```bash
+brew install ollama
+```
+
+#### Linux
+
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+#### Windows
+
+Download installer from: https://ollama.com/download
+
+---
+
+### 4. Pull & Run Mistral Model
+
+```bash
+ollama pull mistral
+ollama run mistral
+```
+
+> ✅ This starts a local AI server at `http://localhost:11434`
+
+> ⚠️ **Minimum RAM required:** 6 GB. If you're getting memory errors,
+
+
+---
+
+### 5. Start the App
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then visit: [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📡 API Example
 
-## Learn More
+You can test the POST API using `curl`:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+curl -X POST http://localhost:3000/api/post \
+  -H "Content-Type: application/json" \
+  -d '{"content": "Let\'s grab coffee tomorrow", "tone": 2}'
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🧠 File Structure
 
-## Deploy on Vercel
+```
+/app
+  /api/post/route.js      → POST handler (calls Mistral)
+  /page.js                → Main UI
+/components            → FormSlider, Loader, UI components
+/utils/
+  cache.js                → Response caching
+  handleStreamChunk.js    → Streamed response processing
+/public/                  → Assets
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🐛 Troubleshooting
+
+- **Error:** `model requires more system memory`  
+  ➤ Use a lighter model like `llama2`.
+
+- **No response in UI?**  
+  ➤ Ensure `ollama run mistral` is active and terminal is running.
+
+- **Still stuck?**  
+  ➤ Add `console.log(error)` in `catch` blocks for debugging.
+
+---
+
+## 📜 License
+
+MIT © 2025 Chill-o-Meter
+
+---
+
+## 🙌 Credits
+
+Built with 💛 using [Ollama](https://ollama.com), [Radix UI](https://www.radix-ui.com/), and [Next.js](https://nextjs.org/)
